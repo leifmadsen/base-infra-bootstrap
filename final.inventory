@@ -1,6 +1,6 @@
-openshift-master ansible_host=192.168.1.219
-openshift-minion-1 ansible_host=192.168.1.109
-openshift-minion-2 ansible_host=192.168.1.121
+openshift-master ansible_host=192.168.1.185
+openshift-minion-1 ansible_host=192.168.1.228
+openshift-minion-2 ansible_host=192.168.1.31
 
 [OSEv3:children]
 masters
@@ -21,6 +21,19 @@ ansible_ssh_private_key_file=/root/.ssh/id_vm_rsa
 openshift_enable_service_catalog=true
 openshift_service_catalog_image_prefix=openshift/origin-
 openshift_service_catalog_image_version=latest
+ansible_service_broker_image_prefix=openshift/
+ansible_service_broker_registry_url="registry.access.redhat.com"
+
+[glusterfs]
+openshift-master
+openshift-minion-1
+openshift-minion-2
+
+[glusterfs:vars]
+glusterfs_devices='[ "/dev/vdc" ]'
+
+[glusterfs_registry]
+
 
 [masters]
 openshift-master
