@@ -1,12 +1,12 @@
-openshift-master ansible_host=192.168.1.50
-openshift-minion-1 ansible_host=192.168.1.220
-openshift-minion-2 ansible_host=192.168.1.30
+openshift-master ansible_host=192.168.1.219
+openshift-minion-1 ansible_host=192.168.1.109
+openshift-minion-2 ansible_host=192.168.1.121
 
 [OSEv3:children]
 masters
 nodes
 etcd
-# lb
+# lb 
 # nfs
 
 [OSEv3:vars]
@@ -14,9 +14,13 @@ ansible_ssh_user=centos
 ansible_become=yes
 debug_level=2
 openshift_deployment_type=origin
-# openshift_release=v3.6
+openshift_release=v3.6
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 ansible_ssh_private_key_file=/root/.ssh/id_vm_rsa
+# -- service broker variables, per: https://goo.gl/RWwGpR
+openshift_enable_service_catalog=true
+openshift_service_catalog_image_prefix=openshift/origin-
+openshift_service_catalog_image_version=latest
 
 [masters]
 openshift-master
