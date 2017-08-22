@@ -1,16 +1,31 @@
 ---
 
-- name: Create images for spare disks
+- name: Create images for Docker spare disks
   shell: >
     dd if=/dev/zero of={{ spare_disk_location }}/{{ item }}.img bs=1M count={{ spare_disk_size_megs }}
   args:
     creates: "{{ spare_disk_location }}/{{ item }}.img"
   with_items: "{{ virtual_machines }}"
 
-- name: Attach disk
+- name: Create images for Gluster spare disks
+  shell: >
+    dd if=/dev/zero of={{ spare_disk_location }}/{{ item }}_gluster.img bs=1M count={{ gluster_disk_size_megs }}
+  args:
+    creates: "{{ spare_disk_location }}/{{ item }}_gluster.img"
+  with_items: "{{ virtual_machines }}"
+
+- name: Attach Docker disks
   shell: >
     virsh attach-disk "{{ item }}" {{ spare_disk_location }}/{{ item }}.img {{ vm_disk_device }} --cache none &&
     touch {{ spare_disk_location }}/.attached-{{ item }}
   args:
     creates: "{{ spare_disk_location }}/.attached-{{ item }}"
+  with_items: "{{ virtual_machines }}"
+
+- name: Attach Gluster disks
+  shell: >
+    virsh attach-disk "{{ item }}" {{ spare_disk_location }}/{{ item }}_gluster.img {{ vm_disk_device_gluster }} --cache none &&
+    touch {{ spare_disk_location }}/.attached-gluster-{{ item }}
+  args:
+    creates: "{{ spare_disk_location }}/.attached-gluster-{{ item }}"
   with_items: "{{ virtual_machines }}"

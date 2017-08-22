@@ -10,14 +10,26 @@
     virsh undefine {{ item }}
   with_items: "{{ virtual_machines }}"
 
-- name: Remove spare disk images
+- name: Remove spare disk images (docker)
   file:
     dest: "{{ spare_disk_location }}/{{ item }}.img"
     state: absent
   with_items: "{{ virtual_machines }}"
 
-- name: Remove spare disk attached semaphor
+- name: Remove spare disk images (gluster)
+  file:
+    dest: "{{ spare_disk_location }}/{{ item }}_gluster.img"
+    state: absent
+  with_items: "{{ virtual_machines }}"
+
+- name: Remove spare disk attached semaphor (docker)
   file:
     dest: "{{ spare_disk_location }}/.attached-{{ item }}"
+    state: absent
+  with_items: "{{ virtual_machines }}"
+
+- name: Remove spare disk attached semaphor (gluster)
+  file:
+    dest: "{{ spare_disk_location }}/.attached-gluster-{{ item }}"
     state: absent
   with_items: "{{ virtual_machines }}"
