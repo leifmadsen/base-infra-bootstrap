@@ -150,7 +150,7 @@
     msg: "Looks like there's still a loopback device in play with docker storage."
   when: "'loop' in docker_info.stdout"
 
-- name: Install firewalld stuff
+- name: Install firewalld deps
   yum:
     name: "{{ item }}"
     state: present
@@ -172,6 +172,11 @@
     name: firewalld
     state: started
     enabled: yes
+
+- name: Install glusterfs-fuse for glusterfs
+  yum:
+    name: glusterfs-fuse
+    state: present
 
 # --------------- previously for upstream docker.
 
