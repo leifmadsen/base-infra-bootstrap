@@ -9,7 +9,7 @@
 
 - name: Create images for Gluster spare disks
   shell: >
-    dd if=/dev/zero of={{ spare_disk_location }}/{{ item }}_gluster.img bs=1M count={{ gluster_disk_size_megs }}
+    qemu-img create -f raw {{ spare_disk_location }}/{{ item }}_gluster.img {{ gluster_disk_size_megs }}M
   args:
     creates: "{{ spare_disk_location }}/{{ item }}_gluster.img"
   with_items: "{{ virtual_machines }}"
