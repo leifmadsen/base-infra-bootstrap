@@ -30,7 +30,10 @@ openshift-minion-1
 openshift-minion-2
 
 [glusterfs:vars]
-glusterfs_devices='[ "/dev/vdc" ]'
+glusterfs_devices=[ "/dev/vdc" ]
+r_openshift_storage_glusterfs_firewall_enabled=false
+openshift_storage_glusterfs_timeout=600
+openshift_storage_glusterfs_wipe=true
 
 [glusterfs_registry]
 
