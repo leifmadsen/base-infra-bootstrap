@@ -150,33 +150,34 @@
     msg: "Looks like there's still a loopback device in play with docker storage."
   when: "'loop' in docker_info.stdout"
 
-- name: Install firewalld deps
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - firewalld
-    - python-firewall
+# - name: Install firewalld deps
+#   yum:
+#     name: "{{ item }}"
+#     state: present
+#   with_items:
+#     - firewalld
+#     - python-firewall
 
-- name: Disable iptables
-  service:
-    name: iptables
-    state: stopped
+# - name: Disable iptables
+#   service:
+#     name: iptables
+#     state: stopped
+#   ignore_errors: yes
 
-- name: Unmask firewalld
-  shell: >
-    systemctl unmask firewalld
+# - name: Unmask firewalld
+#   shell: >
+#     systemctl unmask firewalld
 
-- name: Start and enable firewalld
-  service:
-    name: firewalld
-    state: started
-    enabled: yes
+# - name: Start and enable firewalld
+#   service:
+#     name: firewalld
+#     state: started
+#     enabled: yes
 
-- name: Install glusterfs-fuse for glusterfs
-  yum:
-    name: glusterfs-fuse
-    state: present
+# - name: Install glusterfs-fuse for glusterfs
+#   yum:
+#     name: glusterfs-fuse
+#     state: present
 
 # --------------- previously for upstream docker.
 

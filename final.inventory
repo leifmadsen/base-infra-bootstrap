@@ -1,6 +1,6 @@
-openshift-master ansible_host=192.168.1.92
-openshift-minion-1 ansible_host=192.168.1.238
-openshift-minion-2 ansible_host=192.168.1.187
+openshift-master ansible_host=192.168.1.223
+openshift-minion-1 ansible_host=192.168.1.110
+openshift-minion-2 ansible_host=192.168.1.243
 
 [OSEv3:children]
 masters
@@ -17,28 +17,38 @@ openshift_deployment_type=origin
 openshift_release=v3.6
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
 ansible_ssh_private_key_file=/root/.ssh/id_vm_rsa
+
 # -- service broker variables, per: https://goo.gl/RWwGpR
 openshift_enable_service_catalog=true
 openshift_service_catalog_image_prefix=openshift/origin-
 openshift_service_catalog_image_version=latest
 ansible_service_broker_image_prefix=openshift/
+ansible_service_broker_registry_type=rhcc
 ansible_service_broker_registry_url="registry.access.redhat.com"
-os_firewall_use_firewalld=true
+
+openshift_hosted_etcd_storage_kind=dynamic
+openshift_hosted_etcd_storage_volume_name=etcd-vol
+openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
+openshift_hosted_etcd_storage_volume_size=128M
+openshift_hosted_etcd_storage_labels={'storage': 'etcd'}
+
+# Use firewall d
+# os_firewall_use_firewalld=true
 
 [glusterfs]
-openshift-master
+openshift-master 
 openshift-minion-1
 openshift-minion-2
 
 [glusterfs:vars]
 glusterfs_devices=[ "/dev/vdc" ]
-r_openshift_storage_glusterfs_use_firewalld=true
+r_openshift_storage_glusterfs_use_firewalld=false
 r_openshift_storage_glusterfs_firewall_enabled=true
 openshift_storage_glusterfs_timeout=600
 openshift_storage_glusterfs_wipe=true
 
-[glusterfs_registry]
-
+# [glusterfs_registry]
+# openshift-master
 
 [masters]
 openshift-master
