@@ -1,6 +1,6 @@
-openshift-master ansible_host=192.168.1.223
-openshift-minion-1 ansible_host=192.168.1.110
-openshift-minion-2 ansible_host=192.168.1.243
+openshift-master ansible_host=192.168.1.222
+openshift-minion-1 ansible_host=192.168.1.77
+openshift-minion-2 ansible_host=192.168.1.74
 
 [OSEv3:children]
 masters
@@ -23,8 +23,11 @@ openshift_enable_service_catalog=true
 openshift_service_catalog_image_prefix=openshift/origin-
 openshift_service_catalog_image_version=latest
 ansible_service_broker_image_prefix=openshift/
-ansible_service_broker_registry_type=rhcc
-ansible_service_broker_registry_url="registry.access.redhat.com"
+# ansible_service_broker_registry_type=rhcc
+# ansible_service_broker_registry_url="registry.access.redhat.com"
+ansible_service_broker_registry_user=bowline
+ansible_service_broker_registry_password="..."
+ansible_service_broker_registry_organization=bowline.io
 
 openshift_hosted_etcd_storage_kind=dynamic
 openshift_hosted_etcd_storage_volume_name=etcd-vol
