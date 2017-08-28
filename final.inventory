@@ -1,6 +1,6 @@
-openshift-master ansible_host=192.168.1.222
-openshift-minion-1 ansible_host=192.168.1.77
-openshift-minion-2 ansible_host=192.168.1.74
+openshift-master ansible_host=192.168.1.78
+openshift-minion-1 ansible_host=192.168.1.196
+openshift-minion-2 ansible_host=192.168.1.176
 
 [OSEv3:children]
 masters
@@ -19,27 +19,27 @@ openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 
 ansible_ssh_private_key_file=/root/.ssh/id_vm_rsa
 
 # -- service broker variables, per: https://goo.gl/RWwGpR
-openshift_enable_service_catalog=true
-openshift_service_catalog_image_prefix=openshift/origin-
-openshift_service_catalog_image_version=latest
-ansible_service_broker_image_prefix=openshift/
+# openshift_enable_service_catalog=true
+# openshift_service_catalog_image_prefix=openshift/origin-
+# openshift_service_catalog_image_version=latest
+# ansible_service_broker_image_prefix=openshift/
 # ansible_service_broker_registry_type=rhcc
 # ansible_service_broker_registry_url="registry.access.redhat.com"
-ansible_service_broker_registry_user=bowline
-ansible_service_broker_registry_password="..."
-ansible_service_broker_registry_organization=bowline.io
+# ansible_service_broker_registry_user=bowline
+# ansible_service_broker_registry_password="..."
+# ansible_service_broker_registry_organization=bowline.io
 
-openshift_hosted_etcd_storage_kind=dynamic
-openshift_hosted_etcd_storage_volume_name=etcd-vol
-openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
-openshift_hosted_etcd_storage_volume_size=128M
-openshift_hosted_etcd_storage_labels={'storage': 'etcd'}
+# openshift_hosted_etcd_storage_kind=dynamic
+# openshift_hosted_etcd_storage_volume_name=etcd-vol
+# openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
+# openshift_hosted_etcd_storage_volume_size=128M
+# openshift_hosted_etcd_storage_labels={'storage': 'etcd'}
 
 # Use firewall d
 # os_firewall_use_firewalld=true
 
 [glusterfs]
-openshift-master 
+openshift-master
 openshift-minion-1
 openshift-minion-2
 
