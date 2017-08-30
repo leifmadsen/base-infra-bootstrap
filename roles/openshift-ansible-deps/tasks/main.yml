@@ -15,8 +15,20 @@
     - python-cryptography
     - python-lxml
 
+- name: Set repo fact
+  set_fact:
+    openshift_ansible_repo: "https://github.com/openshift/openshift-ansible.git"
+  when: openshift_ansible_repo is not defined
+
+- name: Set repo version fact
+  set_fact:
+    openshift_ansible_version: master
+  when: openshift_ansible_version is not defined
+
+
 - name: Clone openshift-ansible
   git:
-    repo: https://github.com/openshift/openshift-ansible.git
-    version: master
+    repo: "{{ openshift_ansible_repo }}"
+    version: "{{ openshift_ansible_version }}"
     dest: /root/openshift-ansible
+    force: yes
